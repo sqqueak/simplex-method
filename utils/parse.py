@@ -18,16 +18,14 @@ class Equation:
         s.append(f'{abs(ai)}{xi}')
       else:
         s.append(xi)
-    s.append(f' {self.sign} {self.b}')
+
+    if self.sign != None and self.b != None:
+      s.append(f' {self.sign} {self.b}')
 
     if (t := ''.join(s))[1] == "+":
       return t[3:]
     return f'-{t[3:]}'
-  
-# eqn = Equation([5, 6], ["x1", "x2"], "=", 8)
-# print(eqn)
-# eqn = Equation([-3, -9], ["x", "y"], "=", -6)
-# print(eqn)
+
 
 def get_equation_from_string(s):
   # getting ax, b, and sign
@@ -90,16 +88,21 @@ def get_equation_from_string(s):
         else:
           a.append(int(''.join(buf)))
         x.append(term[i:])
-    
-  # print(a)
-  # print(x)
-  # print(sign)
-  # print(b)
 
   return Equation(a, x, sign, b)
-                 
-                 
-                 
-                 
-print(get_equation_from_string("5x1 + 8x2 - 8x3 >= 4"))
-print(get_equation_from_string("5 < 9x + y - z"))
+           
+
+class LinearProgram:
+  def __init__(self, cost, constraints, variables):
+    self.cost = cost
+    self.constraints = constraints
+    self.variables = variables
+
+  def __str__(self):
+    s = []
+    s.append(f'MIN. {self.cost}')
+    for x in self.constraints:
+      s.append(x)
+    for x in self.variables:
+      s.append(x)
+    return '\n'.join([str(x) for x in s])
